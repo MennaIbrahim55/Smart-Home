@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include "DIO.h"
 #include "LED.h"
-
+#include "Timers.h"
 
 //PIN_DIR output
 void init_LEDs(){
@@ -96,3 +96,27 @@ void LED_TOGG(char LED){
             break;
 }
 }
+
+void LED6_DimLevel(char level){
+    if(level <= 255){
+        Timer0_set_OCR0(level);
+    }
+}
+
+
+void init_Dimming_LED(char CMP_MODE){
+    
+    DIO_PIN_DIR(LED6_DIR, LED6_Dim, OUTPUT);
+    
+    // Timer0 in Fast PWM mode
+    //select prescaler 64= 976.56Hz
+    init_timer0(TIMER_MODE_FPWM, TIMER_CLOCK_SELECT_PS_64); 
+    
+
+    //clear-set(high at first) OR set-clear (low at first)
+    Timer0_set_CMP(CMP_MODE);
+        
+    // intensity=50%
+    LED6_DimLevel(128); 
+}
+

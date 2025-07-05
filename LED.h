@@ -23,6 +23,9 @@
 #define LED5 PC1
 #define LED5_DIR PORTx_C
 
+#define LED6_Dim PC3
+#define LED6_DIR  PORTx_C
+
 #define ALL_LEDs 9
 
 
@@ -30,8 +33,8 @@ void init_LEDs();
 void LED_ON(char LED);
 void LED_OFF(char LED);
 void LED_TOGG(char LED);
-
-
+void init_Dimming_LED(char CMP_MODE);
+void LED6_DimLevel(char level);
 
 
 #endif	/* LED_H */
